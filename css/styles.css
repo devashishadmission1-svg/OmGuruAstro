@@ -860,6 +860,54 @@ h6 {
     font-weight: 600;
 }
 
+.required {
+    color: #ff4444;
+    font-weight: bold;
+    margin-left: 2px;
+}
+
+.section-label {
+    font-size: 1rem;
+    color: var(--saffron);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.person-section {
+    margin-bottom: 0.5rem;
+}
+
+.form-message {
+    margin-top: 1rem;
+    padding: 1rem;
+    border-radius: var(--border-radius-sm);
+    font-size: 0.9rem;
+    display: none;
+}
+
+.form-message.error {
+    background: #ffebee;
+    color: #c62828;
+    border: 1px solid #ffcdd2;
+}
+
+.form-message.success {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #c8e6c9;
+}
+
+.person2-fields {
+    background: var(--bg-tertiary);
+    padding: 1.5rem;
+    border-radius: var(--border-radius-md);
+    margin-top: 1rem;
+    border: 1px solid var(--card-border);
+}
+
 .form-control {
     width: 100%;
     background: var(--bg-secondary);

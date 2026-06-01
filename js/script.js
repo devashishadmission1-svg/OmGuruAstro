@@ -168,24 +168,106 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Form Submission
     const contactForm = document.getElementById('contactForm');
+    const serviceSelect = document.getElementById('service');
+    const person2Section = document.getElementById('person2-section');
+    
+    // Toggle person 2 fields based on service selection
+    if (serviceSelect && person2Section) {
+        serviceSelect.addEventListener('change', (e) => {
+            if (e.target.value === 'relationship') {
+                person2Section.style.display = 'block';
+            } else {
+                person2Section.style.display = 'none';
+            }
+        });
+    }
+    
     if (contactForm) {
         const sessionId = 'session_' + Math.random().toString(36).substr(2, 9) + '_' + Date.now();
+        const formMessage = document.getElementById('form-message');
         
         const getFormData = () => {
             const getVal = (id) => document.getElementById(id)?.value || '';
-            return {
+            const service = getVal('service');
+            const data = {
                 sessionId: sessionId,
                 name: getVal('name'),
                 phone: (getVal('country-code') || '') + ' ' + getVal('phone'),
                 dob: getVal('dob'),
                 tob: getVal('tob'),
                 pob: getVal('pob'),
-                service: getVal('service')
+                service: service,
+                message: getVal('message')
             };
+            
+            // Add person 2 data if relationship service is selected
+            if (service === 'relationship') {
+                data.name2 = getVal('name2');
+                data.dob2 = getVal('dob2');
+                data.tob2 = getVal('tob2');
+                data.pob2 = getVal('pob2');
+            }
+            
+            return data;
+        };
+        
+        const validateForm = () => {
+            const service = serviceSelect.value;
+            const errors = [];
+            
+            // Common required fields
+            const name = document.getElementById('name').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const dob = document.getElementById('dob').value;
+            const tob = document.getElementById('tob').value;
+            const pob = document.getElementById('pob').value.trim();
+            const message = document.getElementById('message').value.trim();
+            
+            if (!name) errors.push('कृपया नाम भर्नुहोस्।');
+            if (!phone) errors.push('कृपया फोन नम्बर भर्नुहोस्।');
+            if (!dob) errors.push('कृपया जन्म मिति भर्नुहोस्।');
+            if (!tob) errors.push('कृपया जन्म समय भर्नुहोस्।');
+            if (!pob) errors.push('कृपया जन्म स्थान भर्नुहोस्।');
+            if (!message) errors.push('कृपया सन्देश भर्नुहोस्।');
+            
+            // Validate person 2 fields if relationship service
+            if (service === 'relationship') {
+                const name2 = document.getElementById('name2').value.trim();
+                const dob2 = document.getElementById('dob2').value;
+                const tob2 = document.getElementById('tob2').value;
+                const pob2 = document.getElementById('pob2').value.trim();
+                
+                if (!name2) errors.push('कृपया दोस्रो व्यक्तिको नाम भर्नुहोस्।');
+                if (!dob2) errors.push('कृपया दोस्रो व्यक्तिको जन्म मिति भर्नुहोस्।');
+                if (!tob2) errors.push('कृपया दोस्रो व्यक्तिको जन्म समय भर्नुहोस्।');
+                if (!pob2) errors.push('कृपया दोस्रो व्यक्तिको जन्म स्थान भर्नुहोस्।');
+            }
+            
+            return errors;
+        };
+        
+        const showMessage = (message, type) => {
+            if (formMessage) {
+                formMessage.textContent = message;
+                formMessage.className = `form-message ${type}`;
+                formMessage.style.display = 'block';
+                
+                setTimeout(() => {
+                    formMessage.style.display = 'none';
+                }, 5000);
+            }
         };
 
         contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
+            
+            // Validate form
+            const errors = validateForm();
+            if (errors.length > 0) {
+                showMessage(errors.join(' '), 'error');
+                return;
+            }
+            
             const btn = contactForm.querySelector('button[type="submit"]');
             const originalText = btn.innerHTML;
             const formData = getFormData();
@@ -201,6 +283,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
 
                 if (response.ok) {
+                    showMessage('सन्देश सफलतापूर्वक पठाइयो! भुक्तानी पृष्ठमा जाँदै...', 'success');
                     btn.innerHTML = '<i class="fas fa-check"></i> पुन: निर्देशित गर्दै...';
                     btn.style.background = 'var(--saffron)';
                     setTimeout(() => {
@@ -210,6 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     throw new Error('Server error');
                 }
             } catch (err) {
+                showMessage('सर्भरमा त्रुटि भयो। कृपया पुन: प्रयास गर्नुहोस्।', 'error');
                 btn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> त्रुटि';
                 btn.style.background = '#ff4444';
                 setTimeout(() => {

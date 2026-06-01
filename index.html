@@ -184,11 +184,11 @@
                 <div class="contact-form-container glass-effect">
                     <form id="contactForm" class="contact-form">
                         <div class="form-group">
-                            <label for="name">तपाईंको नाम</label>
+                            <label for="name">तपाईंको नाम <span class="required">*</span></label>
                             <input type="text" id="name" required class="form-control" placeholder="नाम">
                         </div>
                         <div class="form-group">
-                            <label for="phone">फोन नम्बर</label>
+                            <label for="phone">फोन नम्बर <span class="required">*</span></label>
                             <div class="phone-input-group">
                                 <select id="country-code" class="form-control country-code-select">
                                     <option value="+977">🇳🇵 +977</option>
@@ -205,23 +205,55 @@
                                 <input type="tel" id="phone" required class="form-control" placeholder="९८XXXXXXXX">
                             </div>
                         </div>
+                        
+                        <!-- Person 1 Details -->
+                        <div class="form-group person-section">
+                            <label class="section-label">पहिलो व्यक्तिको विवरण</label>
+                        </div>
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="dob">जन्म मिति</label>
+                                <label for="dob">जन्म मिति <span class="required">*</span></label>
                                 <input type="date" id="dob" required class="form-control">
                             </div>
                             <div class="form-group">
-                                <label for="tob">जन्म समय</label>
+                                <label for="tob">जन्म समय <span class="required">*</span></label>
                                 <input type="time" id="tob" required class="form-control">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="pob">जन्म स्थान</label>
+                            <label for="pob">जन्म स्थान <span class="required">*</span></label>
                             <input type="text" id="pob" required class="form-control"
                                 placeholder="उदा: काठमाडौं, नेपाल">
                         </div>
+                        
+                        <!-- Person 2 Details (for relationship compatibility) -->
+                        <div id="person2-section" class="person2-fields" style="display: none;">
+                            <div class="form-group person-section">
+                                <label class="section-label">दोस्रो व्यक्तिको विवरण <span class="required">*</span></label>
+                            </div>
+                            <div class="form-group">
+                                <label for="name2">नाम <span class="required">*</span></label>
+                                <input type="text" id="name2" class="form-control" placeholder="नाम">
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="dob2">जन्म मिति <span class="required">*</span></label>
+                                    <input type="date" id="dob2" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="tob2">जन्म समय <span class="required">*</span></label>
+                                    <input type="time" id="tob2" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="pob2">जन्म स्थान <span class="required">*</span></label>
+                                <input type="text" id="pob2" class="form-control"
+                                    placeholder="उदा: काठमाडौं, नेपाल">
+                            </div>
+                        </div>
+                        
                         <div class="form-group">
-                            <label for="service">सेवा चयन गर्नुहोस्</label>
+                            <label for="service">सेवा चयन गर्नुहोस् <span class="required">*</span></label>
                             <select id="service" class="form-control">
                                 <option value="birth-chart">जन्म कुण्डली अध्ययन</option>
                                 <option value="relationship">सम्बन्ध अनुकूलता</option>
@@ -230,11 +262,12 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="message">सन्देश</label>
+                            <label for="message">सन्देश <span class="required">*</span></label>
                             <textarea id="message" rows="4" required class="form-control"
                                 placeholder="म तपाईको ज्योतिषीय यात्रामा कसरी मद्दत गर्न सक्छु?"></textarea>
                         </div>
                         <button type="submit" class="btn btn-primary full-width">सन्देश पठाउनुहोस्</button>
+                        <div id="form-message" class="form-message"></div>
                         <div id="sync-status" class="sync-status">
                             <span class="sync-dot"></span>
                             <span class="sync-text">एजेन्ट प्रबन्धक: निगरानी गर्दै...</span>
