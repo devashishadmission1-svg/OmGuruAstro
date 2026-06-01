@@ -162,10 +162,7 @@ body {
 }
 
 .text-gradient {
-    background: linear-gradient(135deg, var(--saffron), var(--saffron-hover));
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--text-main);
 }
 
 @keyframes floatOrb {
